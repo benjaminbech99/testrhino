@@ -2,19 +2,22 @@ box::use(
   shiny[bootstrapPage, moduleServer, NS, renderText, tags, textOutput],
 )
 
+box::use(
+  app/view/chart,
+)
+
 #' @export
 ui <- function(id) {
   ns <- NS(id)
+  
   bootstrapPage(
-    tags$h3(
-      textOutput(ns("message"))
-    )
+    chart$ui(ns("chart"))
   )
 }
 
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    output$message <- renderText("Hello!")
+    chart$server("chart")
   })
 }
